@@ -15,85 +15,63 @@ WdGraphicView::WdGraphicView(QWidget *parent) : QGraphicsView(parent)
 
        scene = new QGraphicsScene();   // Инициализируем сцену для отрисовки
        this->setScene(scene);          // Устанавливаем сцену в виджет
-
-//       group_1 = new QGraphicsItemGroup(); // Инициализируем первую группу элементов
-//       group_2 = new QGraphicsItemGroup(); // Инициализируем вторую группу элементов
-
-//       scene->addItem(group_1);            // Добавляем первую группу в сцену
-//       scene->addItem(group_2);            // Добавляем вторую группу в сцену
-
-//       timer = new QTimer();               // Инициализируем Таймер
-//       timer->setSingleShot(true);
-//       // Подключаем СЛОТ для отрисовки к таймеру
-//       connect(timer, SIGNAL(timeout()), this, SLOT(drawBackground()));
-//       timer->start(50);                   // Стартуем таймер на 50 миллисекунд
 }
 WdGraphicView::~WdGraphicView()
 {
 
 }
 
-void WdGraphicView::onCourse(double course)
+
+void WdGraphicView::onSetCourse(double course)
 {
     this->course = course;
     scene->update();
+    objects obj;
+    QString sql_str = QString("select * from objects ");
+    QSqlQuery query(sql_str);
+        while(query.next()) {
+            obj.numb = query.value(1).toInt();
+            obj.type="чужой";
+            objs.insert(query.value(1).toInt(),obj);
+}
 }
 
-//void WdGraphicView::onTargetSet(Target target)
-//{
-//    targets.insert(target.id, target);
-//    scene->update();
-//}
 
-//void WdGraphicView::onTargetDelete(Target target)
-//{
-//    targets.remove(target.id);
-//    scene->update();
-//}
-
-void WdGraphicView::mousePressEvent(QMouseEvent *event)
-{
-//    double rad = 1;
-//    QPointF pt = mapToScene(event->pos());
-//    scene->addEllipse(pt.x()-rad, pt.y()-rad, rad*2.0, rad*2.0,
-//                      QPen(), QBrush(Qt::SolidPattern));
-}
-
-void  WdGraphicView::drawBackground(QPainter *painter, const QRectF &rect)
+void  WdGraphicView::drawBackground(QPainter *paint, const QRectF &rect)
 {
     Q_UNUSED(rect)
 
-    painter->setRenderHint(QPainter::Antialiasing);
+    paint->setRenderHint(QPainter::Antialiasing);
 
     // отрисовка сторон света
     QPen pen(Qt::black, 1, Qt::SolidLine);
-    painter->setPen(pen);
+    paint->setPen(pen);
 
     int radius = qMin(this->width(), this->height()) / 2 - 20;
-    painter->drawEllipse(QPoint(0, 0), radius, radius);
-    painter->drawEllipse(QPoint(0, 0), radius + 10, radius + 10);
+    paint->drawEllipse(QPoint(0, 0), radius, radius);
+    paint->drawEllipse(QPoint(0, 0), radius + 10, radius + 10);
 
     QVector<QString> cardinalPointName = {"N", "NE", "E", "SE", "S", "SW", "W","NW"};
     for (int i = 0; i < 360; i += 15) {
         if (i % 90 == 0)
-            painter->drawText(QPoint(-5, -radius), cardinalPointName[i / 45]);
+            paint->drawText(QPoint(-5, -radius), cardinalPointName[i / 45]);
         else if (i % 45 == 0)
-            painter->drawText(QPoint(-10, -radius), cardinalPointName[i / 45]);
+            paint->drawText(QPoint(-10, -radius), cardinalPointName[i / 45]);
 
         if (i % 45 == 0)
-            painter->drawLine(radius + 10, 0, radius + 20, 0);
+            paint->drawLine(radius + 10, 0, radius + 20, 0);
         else
-            painter->drawLine(radius, 0, radius + 10, 0);
+            paint->drawLine(radius, 0, radius + 10, 0);
 
-        painter->rotate(15);
+        paint->rotate(15);
     }
 
     // отрисовка своего корабля
     pen.setColor(Qt::darkGray);
     pen.setWidth(2);
-    painter->setPen(pen);
+    paint->setPen(pen);
 
-    painter->rotate(this->course);
+    paint->rotate(this->course);
     QPolygonF polygon;
     polygon << QPointF(0, 0)
             << QPointF(5, 10)
@@ -101,7 +79,7 @@ void  WdGraphicView::drawBackground(QPainter *painter, const QRectF &rect)
             << QPointF(-5, 20)
             << QPointF(-5, 10)
             << QPointF(0, 0);
-    painter->drawPolygon(polygon);
+    paint->drawPolygon(polygon);
 
     QPainterPath path;
     path.addPolygon(polygon);
@@ -109,52 +87,62 @@ void  WdGraphicView::drawBackground(QPainter *painter, const QRectF &rect)
     QBrush brush;
     brush.setColor(Qt::gray);
     brush.setStyle(Qt::SolidPattern);
-    painter->fillPath(path, brush);
-};
+    paint->fillPath(path, brush);
+    paint->setRenderHint(QPainter::Antialiasing);
 
-//void WdGraphicView::drawForeground(QPainter *painter, const QRectF &rect)
-//{
-//    Q_UNUSED(rect)
 
-//    painter->setRenderHint(QPainter::Antialiasing);
+}
 
-//    QPen pen(Qt::blue, 1, Qt::SolidLine);
-//    painter->setPen(pen);
+void WdGraphicView::drawForeground(QPainter *paint, const QRectF &rect)
+{
+    Q_UNUSED(rect)
 
-//    for (QMapIterator<int, Target> it(targets); it.hasNext();) {
-//        it.next();
+    paint->setRenderHint(QPainter::Antialiasing);
 
-//        Target const &target = it.value();
-//        double dx = target.range * qSin(qDegreesToRadians(target.bearing));
-//        double dy = -target.range * qCos(qDegreesToRadians(target.bearing));
-//        painter->translate(dx, dy);
-//        painter->rotate(target.bearing - 180);
+    /*QPen pen(Qt::green, 1, Qt::SolidLine);
+    paint->setPen(pen)*/;
 
-//        switch (target.typeId) {
-//        case TargetType::Surface:
-//        {
-//            QPolygonF polygon;
-//            polygon << QPointF(0, 0)
-//                    << QPointF(5, 10)
-//                    << QPointF(5, 25)
-//                    << QPointF(-5, 25)
-//                    << QPointF(-5, 10)
-//                    << QPointF(0, 0);
-//            painter->drawPolygon(polygon);
-//        }
-//            break;
-//        case TargetType::Subsurface:
-//            painter->drawEllipse(0, 0, 10, 10);
-//            break;
-//        case TargetType::Air:
-//            painter->drawLine(-10, 0, 10, 0);
-//            painter->drawLine(0, 20, 0, 0);
-//            break;
-//        default:
-//            break;
-//        }
+ double peleng = 180;
+ double d= 99;
+     QString sql_str = QString("select * from objects ");
+     QSqlQuery query(sql_str);
+         while(query.next()) {
+             peleng= query.value(7).toInt();
+             d= query.value(9).toInt();
+        double dx = d * qSin(qDegreesToRadians(peleng));
+        double dy = -d * qCos(qDegreesToRadians(peleng));
+        paint->translate(dx, dy);
+        paint->rotate(peleng - 180);
 
-//        painter->rotate(180 - target.bearing);
-//        painter->translate(-dx, -dy);
-//    }
-//}
+        if (query.value(3).toString()=="Свой")
+        {
+            QPen pen(Qt::green, 1, Qt::SolidLine);
+            paint->setPen(pen);
+
+        }
+        else{
+            QPen pen(Qt::red, 1, Qt::SolidLine);
+            paint->setPen(pen);
+        }
+        if(query.value(4).toString()=="Воздушный")
+        {
+                    paint->drawLine(-10, 0, 10, 0);
+                    paint->drawLine(0, 20, 0, 0);
+
+               }
+        if(query.value(4).toString()=="Надводный")
+        {
+            QPolygonF polygon;
+            polygon << QPointF(0, 0)
+                    << QPointF(5, 10)
+                    << QPointF(5, 20)
+                    << QPointF(-5, 20)
+                    << QPointF(-5, 10)
+                    << QPointF(0, 0);
+            paint->drawPolygon(polygon);
+        }
+
+        paint->rotate(180 - peleng);
+        paint->translate(-dx, -dy);
+    }
+}

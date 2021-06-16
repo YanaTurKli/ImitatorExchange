@@ -4,6 +4,7 @@
 #include "QStackedWidget"
 #include "wdcom.h"
 
+
 Window::Window(QWidget *parent)
     : QMainWindow(parent)
      , ui(new Ui::Window)
@@ -29,7 +30,7 @@ Window::Window(QWidget *parent)
     /* Инициализируем виджет с графикой */
     graphic = new WdGraphicView();
     /* и добавляем его на слой */
-    connect(this, SIGNAL(onCourse(double)), graphic, SLOT(onCourse(double)));
+    connect(this, SIGNAL(setCourse(double)), graphic, SLOT(onSetCourse(double)));
 //    connect(this, SIGNAL(setTarget(Target)), tw, SLOT(onTargetSet(Target)));
 //    connect(this, SIGNAL(delTarget(Target)), tw, SLOT(onTargetDelete(Target)));
       ui->IUSgraphicsLayout->addWidget(graphic);
@@ -461,6 +462,20 @@ void Window::updateTableDoc(int id)
 
                 ++row;
         }
+}
+
+void Window::setObj()
+{
+    objects obj;
+    QString sql_str = QString("select * from objects ");
+    QSqlQuery query(sql_str);
+        while(query.next()) {
+            obj.numb = query.value(1).toInt();
+            obj.type="чужой";
+            objs.insert(query.value(1).toInt(),obj);
+
+}
+        emit setCourse(0.0);
 }
 void Window::updateDatabaseSlot()
 {

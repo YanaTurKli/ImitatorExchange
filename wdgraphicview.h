@@ -6,54 +6,52 @@
 #include <QGraphicsScene>
 #include <QGraphicsItemGroup>
 #include <QTimer>
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlError>
+#include <QtSql/QSqlQuery>
 
 class WdGraphicView : public QGraphicsView
 {
     Q_OBJECT
 public:
+            QSqlDatabase db;
     explicit WdGraphicView(QWidget *parent = 0);
     ~WdGraphicView();
 
 public Q_SLOTS:
-    void onCourse(double course);
+    void onSetCourse(double course);
 
 private slots:
-//    void slotAlarmTimer();  /* слот для обработчика переполнения таймера
-//                             * в нём будет производиться перерисовка
-//                             * виджета
-//                             * */
+
 
 private:
     QGraphicsScene      *scene;     // Объявляем сцену для отрисовки
-        double course = 0.0;
-    QGraphicsItemGroup  *group_1;   // Объявляем первую группу элементов
-    QGraphicsItemGroup  *group_2;   // Объявляем вторую группу элементов
+        double course = 30.0;
 
-    /* Таймер для задержки отрисовки.
-     * Дело в том, что при создании окна и виджета
-     * необходимо некоторое время, чтобы родительский слой
-     * развернулся, чтобы принимать от него адекватные параметры
-     * ширины и высоты
-     * */
     QTimer              *timer;
+    struct objects
+    {
+        int numb;
+        QString type;
+    };
+
+    QMap<int,objects> objs;
 
 private:
-    /* Перегружаем событие изменения размера окна,
-     * чтобы перехватывать его
-     * */
-//    void resizeEvent(QResizeEvent *event);
-//    /* Метод для удаления всех элементов
-//     * из группы элементов
-//     * */
-    void deleteItemsFromGroup(QGraphicsItemGroup *group_1);
-    void mousePressEvent(QMouseEvent *event) override;
 
     /**
      * @brief отрисовка фона
      * @param painter
      * @param rect
      */
-    void drawBackground(QPainter *painter, const QRectF &rect) override;
+    void drawBackground(QPainter *paint, const QRectF &rect) override;
+
+    /**
+     * @brief отрисовка переднего плана
+     * @param painter
+     * @param rect
+     */
+    void drawForeground(QPainter *paint, const QRectF &rect);
 };
 
 #endif // WDGRAPHICVIEW_H

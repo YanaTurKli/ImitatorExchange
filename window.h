@@ -27,10 +27,22 @@ public:
     ~Window();
     QSqlDatabase db;
 
+Q_SIGNALS:
+    void setCourse(double course);
 private:
 
     Ui::Window *ui;
     WdGraphicView *graphic;
+
+    struct objects
+    {
+        int numb;
+        QString type;
+    };
+
+    QMap<int,objects> objs;
+
+private Q_SLOTS:
 
 public slots:
    void pb_pbInsert_click();
@@ -40,6 +52,7 @@ public slots:
    void updateTableCom(int id);
    void newRls(int id);
    void updateTableDoc(int id);
+   void setObj();
 
 
 };

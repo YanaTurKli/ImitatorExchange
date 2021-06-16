@@ -29,6 +29,9 @@ Window::Window(QWidget *parent)
     /* Инициализируем виджет с графикой */
     graphic = new WdGraphicView();
     /* и добавляем его на слой */
+    connect(this, SIGNAL(onCourse(double)), graphic, SLOT(onCourse(double)));
+//    connect(this, SIGNAL(setTarget(Target)), tw, SLOT(onTargetSet(Target)));
+//    connect(this, SIGNAL(delTarget(Target)), tw, SLOT(onTargetDelete(Target)));
       ui->IUSgraphicsLayout->addWidget(graphic);
 
     updateTableRLS();

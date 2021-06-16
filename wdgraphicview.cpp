@@ -16,101 +16,145 @@ WdGraphicView::WdGraphicView(QWidget *parent) : QGraphicsView(parent)
        scene = new QGraphicsScene();   // Инициализируем сцену для отрисовки
        this->setScene(scene);          // Устанавливаем сцену в виджет
 
-       group_1 = new QGraphicsItemGroup(); // Инициализируем первую группу элементов
-       group_2 = new QGraphicsItemGroup(); // Инициализируем вторую группу элементов
+//       group_1 = new QGraphicsItemGroup(); // Инициализируем первую группу элементов
+//       group_2 = new QGraphicsItemGroup(); // Инициализируем вторую группу элементов
 
-       scene->addItem(group_1);            // Добавляем первую группу в сцену
-       scene->addItem(group_2);            // Добавляем вторую группу в сцену
+//       scene->addItem(group_1);            // Добавляем первую группу в сцену
+//       scene->addItem(group_2);            // Добавляем вторую группу в сцену
 
-       timer = new QTimer();               // Инициализируем Таймер
-       timer->setSingleShot(true);
-       // Подключаем СЛОТ для отрисовки к таймеру
-       connect(timer, SIGNAL(timeout()), this, SLOT(slotAlarmTimer()));
-       timer->start(50);                   // Стартуем таймер на 50 миллисекунд
+//       timer = new QTimer();               // Инициализируем Таймер
+//       timer->setSingleShot(true);
+//       // Подключаем СЛОТ для отрисовки к таймеру
+//       connect(timer, SIGNAL(timeout()), this, SLOT(drawBackground()));
+//       timer->start(50);                   // Стартуем таймер на 50 миллисекунд
 }
 WdGraphicView::~WdGraphicView()
 {
 
 }
-void WdGraphicView::slotAlarmTimer()
+
+void WdGraphicView::onCourse(double course)
 {
-    /* Удаляем все элементы со сцены,
-     * если они есть перед новой отрисовкой
-     * */
-    this->deleteItemsFromGroup(group_1);
-    this->deleteItemsFromGroup(group_2);
-
-    int width = this->width();      // определяем ширину нашего виджета
-    int height = this->height();    // определяем высоту нашего виджета
-
-    /* Устанавливаем размер сцены по размеру виджета
-     * Первая координата - это левый верхний угол,
-     * а Вторая - это правый нижний угол
-     * */
-    scene->setSceneRect(0,0,width,height);
-
-    /* Приступаем к отрисовке произвольной картинки
-     * */
-    QPen penBlack(Qt::black); // Задаём чёрную кисть
-    QPen penRed(Qt::red);   // Задаём красную кисть
-
-    /* Нарисуем черный прямоугольник
-     * */
-    group_1->addToGroup(scene->addLine(20,20, width - 20, 20, penBlack));
-    group_1->addToGroup(scene->addLine(width - 20, 20, width - 20, height -20, penBlack));
-    group_1->addToGroup(scene->addLine(width - 20, height -20, 20, height -20, penBlack));
-    group_1->addToGroup(scene->addLine(20, height -20, 20, 20, penBlack));
-
-    /* Нарисуем красный квадрат
-     * */
-    int sideOfSquare = (height > width) ? (width - 60) : (height - 60);
-    int centerOfWidget_X = width/2;
-    int centerOfWidget_Y = height/2;
-
-    group_2->addToGroup(scene->addLine(centerOfWidget_X - (sideOfSquare/2),
-                                       centerOfWidget_Y - (sideOfSquare/2),
-                                       centerOfWidget_X + (sideOfSquare/2),
-                                       centerOfWidget_Y - (sideOfSquare/2),
-                                       penRed));
-
-    group_2->addToGroup(scene->addLine(centerOfWidget_X + (sideOfSquare/2),
-                                       centerOfWidget_Y - (sideOfSquare/2),
-                                       centerOfWidget_X + (sideOfSquare/2),
-                                       centerOfWidget_Y + (sideOfSquare/2),
-                                       penRed));
-
-    group_2->addToGroup(scene->addLine(centerOfWidget_X + (sideOfSquare/2),
-                                       centerOfWidget_Y + (sideOfSquare/2),
-                                       centerOfWidget_X - (sideOfSquare/2),
-                                       centerOfWidget_Y + (sideOfSquare/2),
-                                       penRed));
-
-    group_2->addToGroup(scene->addLine(centerOfWidget_X - (sideOfSquare/2),
-                                       centerOfWidget_Y + (sideOfSquare/2),
-                                       centerOfWidget_X - (sideOfSquare/2),
-                                       centerOfWidget_Y - (sideOfSquare/2),
-                                       penRed));
+    this->course = course;
+    scene->update();
 }
 
-/* Этим методом перехватываем событие изменения размера виджет
- * */
-void WdGraphicView::resizeEvent(QResizeEvent *event)
+//void WdGraphicView::onTargetSet(Target target)
+//{
+//    targets.insert(target.id, target);
+//    scene->update();
+//}
+
+//void WdGraphicView::onTargetDelete(Target target)
+//{
+//    targets.remove(target.id);
+//    scene->update();
+//}
+
+void WdGraphicView::mousePressEvent(QMouseEvent *event)
 {
-    timer->start(50);   // Как только событие произошло стартуем таймер для отрисовки
-    QGraphicsView::resizeEvent(event);  // Запускаем событие родителького класса
+//    double rad = 1;
+//    QPointF pt = mapToScene(event->pos());
+//    scene->addEllipse(pt.x()-rad, pt.y()-rad, rad*2.0, rad*2.0,
+//                      QPen(), QBrush(Qt::SolidPattern));
 }
 
-
-/* Метод для удаления всех элементов из группы
- * */
-void WdGraphicView::deleteItemsFromGroup(QGraphicsItemGroup *group)
+void  WdGraphicView::drawBackground(QPainter *painter, const QRectF &rect)
 {
-    /* Перебираем все элементы сцены, и если они принадлежат группе,
-     * переданной в метод, то удаляем их
-     * */
-    foreach( QGraphicsItem *item, scene->items(group->boundingRect())) {
-       if(item->group() == group ) {
-          delete item;
-       }
+    Q_UNUSED(rect)
+
+    painter->setRenderHint(QPainter::Antialiasing);
+
+    // отрисовка сторон света
+    QPen pen(Qt::black, 1, Qt::SolidLine);
+    painter->setPen(pen);
+
+    int radius = qMin(this->width(), this->height()) / 2 - 20;
+    painter->drawEllipse(QPoint(0, 0), radius, radius);
+    painter->drawEllipse(QPoint(0, 0), radius + 10, radius + 10);
+
+    QVector<QString> cardinalPointName = {"N", "NE", "E", "SE", "S", "SW", "W","NW"};
+    for (int i = 0; i < 360; i += 15) {
+        if (i % 90 == 0)
+            painter->drawText(QPoint(-5, -radius), cardinalPointName[i / 45]);
+        else if (i % 45 == 0)
+            painter->drawText(QPoint(-10, -radius), cardinalPointName[i / 45]);
+
+        if (i % 45 == 0)
+            painter->drawLine(radius + 10, 0, radius + 20, 0);
+        else
+            painter->drawLine(radius, 0, radius + 10, 0);
+
+        painter->rotate(15);
     }
-}
+
+    // отрисовка своего корабля
+    pen.setColor(Qt::darkGray);
+    pen.setWidth(2);
+    painter->setPen(pen);
+
+    painter->rotate(this->course);
+    QPolygonF polygon;
+    polygon << QPointF(0, 0)
+            << QPointF(5, 10)
+            << QPointF(5, 20)
+            << QPointF(-5, 20)
+            << QPointF(-5, 10)
+            << QPointF(0, 0);
+    painter->drawPolygon(polygon);
+
+    QPainterPath path;
+    path.addPolygon(polygon);
+
+    QBrush brush;
+    brush.setColor(Qt::gray);
+    brush.setStyle(Qt::SolidPattern);
+    painter->fillPath(path, brush);
+};
+
+//void WdGraphicView::drawForeground(QPainter *painter, const QRectF &rect)
+//{
+//    Q_UNUSED(rect)
+
+//    painter->setRenderHint(QPainter::Antialiasing);
+
+//    QPen pen(Qt::blue, 1, Qt::SolidLine);
+//    painter->setPen(pen);
+
+//    for (QMapIterator<int, Target> it(targets); it.hasNext();) {
+//        it.next();
+
+//        Target const &target = it.value();
+//        double dx = target.range * qSin(qDegreesToRadians(target.bearing));
+//        double dy = -target.range * qCos(qDegreesToRadians(target.bearing));
+//        painter->translate(dx, dy);
+//        painter->rotate(target.bearing - 180);
+
+//        switch (target.typeId) {
+//        case TargetType::Surface:
+//        {
+//            QPolygonF polygon;
+//            polygon << QPointF(0, 0)
+//                    << QPointF(5, 10)
+//                    << QPointF(5, 25)
+//                    << QPointF(-5, 25)
+//                    << QPointF(-5, 10)
+//                    << QPointF(0, 0);
+//            painter->drawPolygon(polygon);
+//        }
+//            break;
+//        case TargetType::Subsurface:
+//            painter->drawEllipse(0, 0, 10, 10);
+//            break;
+//        case TargetType::Air:
+//            painter->drawLine(-10, 0, 10, 0);
+//            painter->drawLine(0, 20, 0, 0);
+//            break;
+//        default:
+//            break;
+//        }
+
+//        painter->rotate(180 - target.bearing);
+//        painter->translate(-dx, -dy);
+//    }
+//}

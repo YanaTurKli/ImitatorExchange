@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1040</width>
-    <height>600</height>
+    <width>1050</width>
+    <height>694</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,17 +19,17 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>450</x>
+     <x>460</x>
      <y>10</y>
      <width>581</width>
-     <height>561</height>
+     <height>671</height>
     </rect>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="page1">
     <widget class="QWidget" name="verticalLayoutWidget">
@@ -312,7 +312,7 @@
        <x>10</x>
        <y>20</y>
        <width>571</width>
-       <height>541</height>
+       <height>651</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -383,7 +383,7 @@
        </layout>
       </item>
       <item>
-       <widget class="QTableWidget" name="tableRLS_2">
+       <widget class="QTableWidget" name="RLStableRLS">
         <property name="showGrid">
          <bool>true</bool>
         </property>
@@ -488,7 +488,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QTableWidget" name="tableObject_2">
+       <widget class="QTableWidget" name="RLStableObject">
         <attribute name="horizontalHeaderDefaultSectionSize">
          <number>70</number>
         </attribute>
@@ -497,7 +497,7 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
-         <widget class="QPushButton" name="pbInsObj">
+         <widget class="QPushButton" name="RLSpbInsObj">
           <property name="enabled">
            <bool>true</bool>
           </property>
@@ -507,7 +507,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pbInsertKom_4">
+         <widget class="QPushButton" name="RLSpbUpdateObj">
           <property name="enabled">
            <bool>true</bool>
           </property>
@@ -517,7 +517,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pbInsertKom_5">
+         <widget class="QPushButton" name="RLSpbUpdateObj_2">
           <property name="enabled">
            <bool>true</bool>
           </property>
@@ -547,7 +547,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QTableWidget" name="tableCom_2">
+       <widget class="QTableWidget" name="RLStableCom">
         <property name="editTriggers">
          <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::EditKeyPressed</set>
         </property>
@@ -575,7 +575,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pbInsertKom_2">
+       <widget class="QPushButton" name="RLSpbInsertKom">
         <property name="enabled">
          <bool>true</bool>
         </property>
@@ -603,7 +603,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QTableWidget" name="tableDoc_2">
+       <widget class="QTableWidget" name="RLStableDoc">
         <attribute name="horizontalHeaderDefaultSectionSize">
          <number>80</number>
         </attribute>
@@ -612,14 +612,14 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_7">
         <item>
-         <widget class="QPushButton" name="pbInsDoc">
+         <widget class="QPushButton" name="RLSpbInsDoc">
           <property name="text">
            <string>Cформировать доклад</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pbClose_2">
+         <widget class="QPushButton" name="RLSpbClose">
           <property name="text">
            <string>Закрыть</string>
           </property>
@@ -631,15 +631,16 @@
     </widget>
    </widget>
   </widget>
-  <widget class="QGraphicsView" name="graphicsView">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>5</x>
-     <y>31</y>
-     <width>441</width>
-     <height>541</height>
+     <x>10</x>
+     <y>30</y>
+     <width>451</width>
+     <height>651</height>
     </rect>
    </property>
+   <layout class="QGridLayout" name="RLSgraphicsLayout"/>
   </widget>
  </widget>
  <resources/>

@@ -1,5 +1,6 @@
-#ifndef WDGRAPHICVIEW_H
-#define WDGRAPHICVIEW_H
+#ifndef NWDGRAPHICVIEW_H
+#define NWDGRAPHICVIEW_H
+
 
 #include <QWidget>
 #include <QGraphicsView>
@@ -10,24 +11,24 @@
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlQuery>
 
-class WdGraphicView : public QGraphicsView
+class NWdGraphicView : public QGraphicsView
 {
     Q_OBJECT
 public:
             QSqlDatabase db;
-    explicit WdGraphicView(QWidget *parent = 0);
-    ~WdGraphicView();
+    explicit NWdGraphicView(QWidget *parent = 0);
+    ~NWdGraphicView();
 
 public Q_SLOTS:
-        void onSetCourse(double course);
 
+    void onSetIdRLS(int id);
 private slots:
 
 
 private:
     QGraphicsScene      *scene;     // Объявляем сцену для отрисовки
         double course = 30.0;
-
+    int Id;
     QTimer              *timer;
     struct objects
     {
@@ -54,4 +55,5 @@ private:
     void drawForeground(QPainter *paint, const QRectF &rect);
 };
 
-#endif // WDGRAPHICVIEW_H
+
+#endif // NWDGRAPHICVIEW_H

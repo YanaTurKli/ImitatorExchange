@@ -15,6 +15,7 @@
 #include <QGraphicsView>
 #include <QGraphicsItemGroup>
 #include <QTimer>
+#include "nwdgraphicview.h"
 
 namespace Ui {
 class NWindow;
@@ -30,16 +31,12 @@ public:
     ~NWindow();
         int Id;
         int Pr;
-
-        void paintEvent(QPaintEvent *);
-        void drawBackground(QPainter &paint);
-    //    void clear(QPainter &paint);
-      //  void timerEvent(QTimerEvent *);
-//        void initPos();
+Q_SIGNALS:
+    void setIdRLS(int id);
 
 private:
     Ui::NWindow *ui;
-    QGraphicsScene *scene = nullptr;
+        NWdGraphicView *graphic;
     // QMap<int, Obj> objects;
     //void drawBackground(QPainter *paint, const QRectF &rect) override;
 
@@ -48,7 +45,7 @@ public slots:
    void NWupdateTableCom(int id);
    void NWupdateTableRLS(int ind);
    void NWupdateTableDoc(int id);
-   void on_tableCom_2_itemClicked(QTableWidgetItem * item);
+   void on_RLStableCom_itemClicked(QTableWidgetItem * item);
    void on_pbInsertKom_2();
    void pb_pbInsDoc_click();
    void pb_pbInsObj_click();

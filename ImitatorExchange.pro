@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
+    nwdgraphicview.cpp \
     nwindow.cpp \
     wdcom.cpp \
     wddoc.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
     window.cpp
 
 HEADERS += \
+    nwdgraphicview.h \
     nwindow.h \
     wdcom.h \
     wddoc.h \

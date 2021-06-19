@@ -131,11 +131,12 @@ void WdObj::on_pbSave_pressed()
     QSqlQuery *quer = new QSqlQuery(db);
     QString str_sql=" ";
     int n=0;
-    QSqlQuery query("select id_object from objects");
+    QSqlQuery query("select id_object from objects order by id_object");
         while(query.next()) {
            n= query.value(0).toInt();
         }
-        n++;
+         n++;
+
    str_sql=QString("INSERT INTO objects (id_object,id_rls,numb, type_obj,class_obj,sign,k,v,vh,x,y,z,t,ek,ev,evh,d,peleng)"
 " VALUES (%12,%1,%2,'%3','%4','%5',%6,%7,%8,1,1,1,'%9',1,1,1,%10,%11)"
 "").arg(id_rls).arg(numb).arg(type).arg(class_obj).arg(sign).arg(k).arg(v).arg(vh).arg(t.toString()).arg(d).arg(peleng).arg(n);

@@ -13,6 +13,7 @@
 #include <wdgraphicview.h>
 #include <QMainWindow>
 #include <QGraphicsView>
+#include <QTimer>
 
 //QT_BEGIN_NAMESPACE
 namespace Ui { class Window; }
@@ -58,6 +59,7 @@ public slots:
    void setTables();
    int isOnRLS(int id);
    void slotUpdateComRLS();
+   void timerEvent(QTimerEvent *);
 
 
 

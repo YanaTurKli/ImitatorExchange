@@ -23,6 +23,7 @@ NWindow::NWindow(QWidget *parent) :
                 connect(obj, SIGNAL(newInsObj(int)), this, SLOT(newObj(int)));
                 doc = new WdDoc();
                    connect(doc, SIGNAL(newInsDoc(int)), this, SLOT(newDoc(int)));
+
 }
 
 NWindow::~NWindow()
@@ -233,6 +234,28 @@ void NWindow::newDoc(int id)
     NWupdateTableDoc(id);
     NWupdateTableCom(id);
     emit updateCom();
+}
+
+void NWindow::timerEvent(QTimerEvent *)
+{
+    int peleng;
+    int d;
+    int id;
+        QSqlQuery *quer = new QSqlQuery(db);
+    QString sql_str = QString("select * from objects where id_rls=%1").arg(Pr);
+    QSqlQuery query(sql_str);
+       while(query.next()) {
+           peleng= query.value(17).toInt();
+           d= query.value(16).toInt()-1;
+           id=query.value(0).toInt();
+
+           QString sql_str = QString("UPDATE objects set  peleng = %1, d = %2 where id_object =%3 ").arg(peleng).arg(d).arg(id);
+           quer->exec(sql_str);
+
+       }
+       NWupdateTableObject(Pr);
+       emit updateCom();
+      emit setIdForGraf(Pr);
 }
 
 void NWindow::NWupdateTableCom(int id)
@@ -479,7 +502,6 @@ void NWindow::NWupdateTableObject(int id)
 }
 void NWindow::NWupdateTableDoc(int id)
 {
-//    ui->tableCom->clear();
     ui->RLStableDoc->setRowCount(0);
 
     QString sql_str = QString("select * from report where issign=true and id_rls=%1").arg(id);
@@ -563,6 +585,7 @@ void NWindow::on_pbInsertKom_2()
    NWupdateTableRLS(Pr);
    NWupdateTableObject(Pr);
    NWupdateTableDoc(Pr);
+   startTimer(1000);
        emit updateCom();
       emit setIdForGraf(Pr);
 

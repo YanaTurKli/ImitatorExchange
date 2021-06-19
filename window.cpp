@@ -45,6 +45,7 @@ Window::Window(QWidget *parent)
     connect(ui->IUSpbInsertKom,SIGNAL(clicked()),this,SLOT(pb_pbInsert_click()));
     w2 = new WdCom();
     connect(w2, SIGNAL(loadDatabaseSignal(int,int)), this, SLOT(slotRLS(int,int)));
+
 }
 
 
@@ -521,5 +522,9 @@ void Window::slotRLS(int id,int type)
         rls2->setTables();
         rls2->setIdRLS(id);
     }
+    startTimer(1000);
 }
-
+void Window::timerEvent(QTimerEvent *)
+{
+    emit setCourse(0.0);
+}

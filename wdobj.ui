@@ -104,7 +104,11 @@
      </widget>
     </item>
     <item row="9" column="1">
-     <widget class="QDoubleSpinBox" name="dsbD"/>
+     <widget class="QDoubleSpinBox" name="dsbD">
+      <property name="maximum">
+       <double>300.990000000000009</double>
+      </property>
+     </widget>
     </item>
     <item row="9" column="0">
      <widget class="QLabel" name="label_9">
@@ -123,7 +127,14 @@
      <widget class="QDoubleSpinBox" name="dsbKurs"/>
     </item>
     <item row="5" column="1">
-     <widget class="QDoubleSpinBox" name="dsbPeleng"/>
+     <widget class="QDoubleSpinBox" name="dsbPeleng">
+      <property name="minimum">
+       <double>-360.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>360.000000000000000</double>
+      </property>
+     </widget>
     </item>
     <item row="5" column="0">
      <widget class="QLabel" name="label_6">

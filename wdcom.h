@@ -31,6 +31,7 @@ private:
    int id_sost;
    int id_scena;
    int id_num;
+   int temp;
 
 public slots:
    void updateCmbNumber(int id);
@@ -48,10 +49,11 @@ public slots:
    void on_pushButton_2_pressed();
    void on_spNum(int id);
    void updateCmbType();
+   void on_sbTemp(double id);
 
 signals:
 
-    void loadDatabaseSignal(int id);
+    void loadDatabaseSignal(int id,int type);
 
 };
 

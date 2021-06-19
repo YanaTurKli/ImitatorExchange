@@ -20,6 +20,9 @@ WdCom::WdCom(QWidget *parent)
     connect(ui->pbSave,SIGNAL(clicked()),this,SLOT(on_pbSave_pressed()));
     connect(ui->pushButton_2,SIGNAL(clicked()),this,SLOT(on_pushButton_2_pressed()));
     connect(ui->spNum,SIGNAL(valueChanged(int)),this,SLOT(on_spNum(int)));
+    connect(ui->dsbTemp,SIGNAL(valueChanged(double)),this,SLOT(on_sbTemp(double)));
+
+
 }
 
 WdCom::~WdCom()
@@ -170,7 +173,11 @@ void WdCom::on_spNum(int id)
 {
     id_num=id;
 }
-
+void WdCom::on_sbTemp(double id)
+{
+    temp=id;
+        ui->pbSave->setEnabled(true);
+}
 void WdCom::on_pbSave_pressed()
 {
     QSqlQuery *quer = new QSqlQuery(db);
@@ -189,28 +196,47 @@ void WdCom::on_pbSave_pressed()
    {
        QMessageBox::information(this,"Запрос",str_sql,QMessageBox::Ok);
    }
-
+       QString sost;
    if(id_com==1)
    {
-       QString sost;
        if(id_sost==1)
            sost="Включено";
        else
              sost="Выключено";
        str_sql=QString("UPDATE rls set status ='%1' "
-"where numb=%2").arg(sost).arg(id_number);
+        "where id_rls=%2").arg(sost).arg(id_number);
 
-       quer2->exec(str_sql);
-       if(quer2->isActive())
-       {
-           QMessageBox::information(this,"Запрос","Команда доставлена",QMessageBox::Ok);
-       }
-       else
-       {
-           QMessageBox::information(this,"Запрос",str_sql,QMessageBox::Ok);
-       }
    }
-   emit loadDatabaseSignal(id_number.toInt());
+   if(id_com==2){
+       if(id_scena==1)
+           sost="Мирное время";
+       else
+             sost="Военное время";
+       str_sql=QString("UPDATE rls set scenario ='%1' "
+        "where id_rls=%2").arg(sost).arg(id_number);
+   }
+   if(id_com==3){
+       str_sql=QString("UPDATE rls set sector = %1 "
+        "where id_rls=%2").arg(id_sector).arg(id_number);
+   }
+   if(id_com==4){
+
+       str_sql=QString("UPDATE rls set temp =%1 "
+        "where id_rls=%2").arg(temp).arg(id_number);
+   }
+
+   quer2->exec(str_sql);
+   if(quer2->isActive())
+   {
+       QMessageBox::information(this,"Запрос","Команда доставлена",QMessageBox::Ok);
+   }
+   else
+   {
+       QMessageBox::information(this,"Запрос",str_sql,QMessageBox::Ok);
+   }
+
+
+   emit loadDatabaseSignal(id_number.toInt(),id_com);
    hide();
 }
 

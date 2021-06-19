@@ -26,75 +26,23 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="13" column="0">
-     <widget class="QPushButton" name="pbSave">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="text">
-       <string>Сохранить</string>
-      </property>
-     </widget>
+    <item row="0" column="1">
+     <widget class="QSpinBox" name="sbNumb"/>
     </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="label_5">
+    <item row="1" column="0">
+     <widget class="QLabel" name="label">
       <property name="enabled">
        <bool>true</bool>
       </property>
       <property name="text">
-       <string>Номер объекта</string>
+       <string>Принадлежность</string>
       </property>
      </widget>
     </item>
     <item row="1" column="1">
-     <widget class="QComboBox" name="cbCom">
+     <widget class="QComboBox" name="cbType">
       <property name="enabled">
        <bool>true</bool>
-      </property>
-      <item>
-       <property name="text">
-        <string>Свой</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-    <item row="9" column="0">
-     <widget class="QLabel" name="label_9">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="text">
-       <string>Х</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="label_8">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="text">
-       <string>Класс</string>
-      </property>
-     </widget>
-    </item>
-    <item row="13" column="1">
-     <widget class="QPushButton" name="pushButton_2">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="text">
-       <string>Закрыть</string>
-      </property>
-     </widget>
-    </item>
-    <item row="11" column="0">
-     <widget class="QLabel" name="label_6">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="text">
-       <string>H</string>
       </property>
      </widget>
     </item>
@@ -108,9 +56,6 @@
       </property>
      </widget>
     </item>
-    <item row="8" column="1">
-     <widget class="QDoubleSpinBox" name="dsbTemp"/>
-    </item>
     <item row="4" column="0">
      <widget class="QLabel" name="lb">
       <property name="enabled">
@@ -121,23 +66,13 @@
       </property>
      </widget>
     </item>
-    <item row="6" column="0">
-     <widget class="QLabel" name="label_3">
+    <item row="12" column="1">
+     <widget class="QPushButton" name="pushButton_2">
       <property name="enabled">
        <bool>true</bool>
       </property>
       <property name="text">
-       <string>Курс</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="label">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="text">
-       <string>Принадлежность</string>
+       <string>Закрыть</string>
       </property>
      </widget>
     </item>
@@ -151,29 +86,66 @@
       </property>
      </widget>
     </item>
-    <item row="10" column="0">
-     <widget class="QLabel" name="label_10">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_5">
       <property name="enabled">
        <bool>true</bool>
       </property>
       <property name="text">
-       <string>Y</string>
+       <string>Номер объекта</string>
       </property>
      </widget>
     </item>
     <item row="4" column="1">
-     <widget class="QComboBox" name="cbSector">
+     <widget class="QComboBox" name="cbSign">
       <property name="enabled">
        <bool>true</bool>
       </property>
-      <item>
-       <property name="text">
-        <string>Самолет</string>
-       </property>
-      </item>
      </widget>
     </item>
-    <item row="12" column="0">
+    <item row="9" column="1">
+     <widget class="QDoubleSpinBox" name="dsbD"/>
+    </item>
+    <item row="9" column="0">
+     <widget class="QLabel" name="label_9">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>Дальность</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="1">
+     <widget class="QDoubleSpinBox" name="dsbV"/>
+    </item>
+    <item row="6" column="1">
+     <widget class="QDoubleSpinBox" name="dsbKurs"/>
+    </item>
+    <item row="5" column="1">
+     <widget class="QDoubleSpinBox" name="dsbPeleng"/>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="label_6">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>Пеленг</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>Курс</string>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="0">
      <widget class="QLabel" name="label_11">
       <property name="enabled">
        <bool>true</bool>
@@ -183,38 +155,38 @@
       </property>
      </widget>
     </item>
-    <item row="9" column="1">
-     <widget class="QDoubleSpinBox" name="dsbTemp_2"/>
-    </item>
-    <item row="10" column="1">
-     <widget class="QDoubleSpinBox" name="dsbTemp_3"/>
-    </item>
-    <item row="11" column="1">
-     <widget class="QDoubleSpinBox" name="dsbTemp_4"/>
-    </item>
-    <item row="12" column="1">
-     <widget class="QDateTimeEdit" name="dateTimeEdit"/>
-    </item>
-    <item row="7" column="1">
-     <widget class="QDoubleSpinBox" name="dsbTemp_5"/>
-    </item>
-    <item row="6" column="1">
-     <widget class="QDoubleSpinBox" name="dsbTemp_6"/>
-    </item>
-    <item row="2" column="1">
-     <widget class="QComboBox" name="cbCom_2">
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_8">
       <property name="enabled">
        <bool>true</bool>
       </property>
-      <item>
-       <property name="text">
-        <string>Воздушный</string>
-       </property>
-      </item>
+      <property name="text">
+       <string>Класс</string>
+      </property>
      </widget>
     </item>
-    <item row="0" column="1">
-     <widget class="QSpinBox" name="spinBox"/>
+    <item row="12" column="0">
+     <widget class="QPushButton" name="pbSave">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>Сохранить</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="1">
+     <widget class="QDoubleSpinBox" name="dsbVh"/>
+    </item>
+    <item row="2" column="1">
+     <widget class="QComboBox" name="cbClass">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="1">
+     <widget class="QTimeEdit" name="timeEd"/>
     </item>
    </layout>
   </widget>

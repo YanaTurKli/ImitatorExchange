@@ -93,22 +93,33 @@ void  WdGraphicView::drawBackground(QPainter *paint, const QRectF &rect)
 
 }
 
+int WdGraphicView::isOnRLS(int id)
+{
+      QString sql_str = QString("select * from rls where id_rls=%1 and status='Включено' ").arg(id);
+       QSqlQuery query(sql_str);
+       if (query.size()==1) {
+            return 0;//выключено
+       }
+       else
+           return 1;//включено
+}
 void WdGraphicView::drawForeground(QPainter *paint, const QRectF &rect)
 {
     Q_UNUSED(rect)
 
     paint->setRenderHint(QPainter::Antialiasing);
 
-    /*QPen pen(Qt::green, 1, Qt::SolidLine);
-    paint->setPen(pen)*/;
+    double peleng;
+    double d;
+     QString sql_str;
+     if(isOnRLS(1)==0) sql_str = QString("select * from objects where id_rls=1  ");
+     if(isOnRLS(2)==0) sql_str = QString("select * from objects where id_rls=2  ");
+     if((isOnRLS(1)==0)&&(isOnRLS(2)==0)) sql_str = QString("select * from objects ");
 
- double peleng = 180;
- double d= 99;
-     QString sql_str = QString("select * from objects ");
      QSqlQuery query(sql_str);
          while(query.next()) {
-             peleng= query.value(7).toInt();
-             d= query.value(9).toInt();
+             peleng= query.value(17).toInt();
+             d= query.value(16).toInt();
         double dx = d * qSin(qDegreesToRadians(peleng));
         double dy = -d * qCos(qDegreesToRadians(peleng));
         paint->translate(dx, dy);

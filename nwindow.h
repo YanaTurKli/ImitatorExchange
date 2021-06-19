@@ -30,13 +30,16 @@ public:
     explicit NWindow(QWidget *parent = nullptr);
     ~NWindow();
         int Id;
-        int Pr;
+        int Pr=0;;
 Q_SIGNALS:
-    void setIdRLS(int id);
+    void updateCom();
+    void setIdForGraf(int id);
 
 private:
     Ui::NWindow *ui;
         NWdGraphicView *graphic;
+        WdObj *obj;
+         WdDoc *doc ;
     // QMap<int, Obj> objects;
     //void drawBackground(QPainter *paint, const QRectF &rect) override;
 
@@ -49,6 +52,10 @@ public slots:
    void on_pbInsertKom_2();
    void pb_pbInsDoc_click();
    void pb_pbInsObj_click();
+   void setTables();
+   void setIdRLS(int id);
+   void newObj(int id);
+   void newDoc(int id);
 signals:
 
     void updateParamCom(int id);

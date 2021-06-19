@@ -32,8 +32,11 @@ Q_SIGNALS:
 private:
 
     Ui::Window *ui;
-    WdGraphicView *graphic;
 
+    WdGraphicView *graphic;
+    NWindow * rls1;
+    NWindow * rls2;
+    WdCom *w2;
     struct objects
     {
         int numb;
@@ -47,12 +50,15 @@ private Q_SLOTS:
 public slots:
    void pb_pbInsert_click();
    void updateTableRLS();
-   void updateTableObject(int id);
+   void updateTableObject();
    void updateDatabaseSlot();
-   void updateTableCom(int id);
-   void newRls(int id);
-   void updateTableDoc(int id);
-   void setObj();
+   void updateTableCom();
+   void slotRLS(int id,int type);
+   void updateTableDoc();
+   void setTables();
+   int isOnRLS(int id);
+   void slotUpdateComRLS();
+
 
 
 };

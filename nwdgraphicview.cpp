@@ -91,16 +91,13 @@ void NWdGraphicView::drawForeground(QPainter *paint, const QRectF &rect)
 
     paint->setRenderHint(QPainter::Antialiasing);
 
-    /*QPen pen(Qt::green, 1, Qt::SolidLine);
-    paint->setPen(pen)*/;
-
  double peleng = 180;
  double d= 99;
      QString sql_str = QString("select * from objects where id_rls=%1 ").arg(Id) ;
      QSqlQuery query(sql_str);
          while(query.next()) {
-             peleng= query.value(7).toInt();
-             d= query.value(9).toInt();
+             peleng= query.value(17).toInt();
+             d= query.value(16).toInt();
         double dx = d * qSin(qDegreesToRadians(peleng));
         double dy = -d * qCos(qDegreesToRadians(peleng));
         paint->translate(dx, dy);

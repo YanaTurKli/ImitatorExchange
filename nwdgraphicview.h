@@ -27,7 +27,7 @@ private slots:
 
 private:
     QGraphicsScene      *scene;     // Объявляем сцену для отрисовки
-        double course = 30.0;
+        double course = 0.0;
     int Id;
     QTimer              *timer;
     struct objects

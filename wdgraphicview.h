@@ -26,7 +26,7 @@ private slots:
 
 private:
     QGraphicsScene      *scene;     // Объявляем сцену для отрисовки
-        double course = 30.0;
+        double course = 0.0;
 
     QTimer              *timer;
     struct objects
@@ -52,6 +52,7 @@ private:
      * @param rect
      */
     void drawForeground(QPainter *paint, const QRectF &rect);
+    int isOnRLS(int id);
 };
 
 #endif // WDGRAPHICVIEW_H

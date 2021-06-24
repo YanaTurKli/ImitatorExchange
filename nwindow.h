@@ -56,7 +56,7 @@ public slots:
    void setIdRLS(int id);
    void newObj(int id);
    void newDoc(int id);
-   void timerEvent(QTimerEvent *); // таймер, чтобы каждую секунду обновлять изображение
+   void timerEvent(QTimerEvent *); // таймер
 signals:
 
     void updateParamCom(int id);

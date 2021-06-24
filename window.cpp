@@ -95,10 +95,9 @@ void Window::setTables()
     headers << "Миним.\nвысота";
     headers << "Сценарий";
     headers << "Темп\nобзора";
-    headers << "Сигнал";
 
 
-    ui->IUStableRLS->setColumnCount(11);
+    ui->IUStableRLS->setColumnCount(10);
     ui->IUStableRLS->setHorizontalHeaderLabels(headers);
     ui->IUStableRLS->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
     ui->IUStableRLS->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
@@ -110,18 +109,17 @@ void Window::setTables()
     ui->IUStableRLS->horizontalHeader()->setSectionResizeMode(7, QHeaderView::Stretch);
     ui->IUStableRLS->horizontalHeader()->setSectionResizeMode(8, QHeaderView::Stretch);
     ui->IUStableRLS->horizontalHeader()->setSectionResizeMode(9, QHeaderView::Stretch);
-    ui->IUStableRLS->horizontalHeader()->setSectionResizeMode(10, QHeaderView::Stretch);
 
     headers.clear();
     headers << "Номер";
     headers << "Принад-\nлежность";
     headers << "Класс";
     headers << "Тип";
-    headers << "Пеленг";
-    headers << "Дальность";
-    headers << "Курс";
-    headers << "Скорость";
-    headers << "Скорость\nпо\nвысоте";
+    headers << "P";
+    headers << "D";
+    headers << "K";
+    headers << "V";
+    headers << "Vh";
     headers << "Х";
     headers << "Y";
     headers << "H";
@@ -243,10 +241,6 @@ void Window::updateTableRLS()
                 nm10->setTextAlignment(Qt::AlignHCenter);
                 ui->IUStableRLS->setItem(row,9,nm10);
 
-                QTableWidgetItem * nm11 = new QTableWidgetItem(query.value(8).toString());
-                nm11->setData(Qt::UserRole, query.value(0));
-                nm11->setTextAlignment(Qt::AlignHCenter);
-                ui->IUStableRLS->setItem(row,10,nm11);
                 ++row;
         }
 }
@@ -288,15 +282,34 @@ void Window::updateTableObject()
                 nm4->setTextAlignment(Qt::AlignHCenter);
                 ui->IUStableObject->setItem(row,3,nm4);
 
-                QTableWidgetItem * nm5 = new QTableWidgetItem(query.value(16).toString());
-                nm5->setData(Qt::UserRole, query.value(0));
-                nm5->setTextAlignment(Qt::AlignHCenter);
-                ui->IUStableObject->setItem(row,4,nm5);
+                if(query.value(16).toInt()<0)
+                {
+                    int p=query.value(17).toInt()+180;
+                    QString pel =QString("%1").arg(p);
+                    QTableWidgetItem * nm5 = new QTableWidgetItem(pel);
+                    nm5->setData(Qt::UserRole, query.value(0));
+                    nm5->setTextAlignment(Qt::AlignHCenter);
+                    ui->IUStableObject->setItem(row,4,nm5);
 
-                QTableWidgetItem * nm6 = new QTableWidgetItem(query.value(17).toString());
-                nm6->setData(Qt::UserRole, query.value(0));
-                nm6->setTextAlignment(Qt::AlignHCenter);
-                ui->IUStableObject->setItem(row,5,nm6);
+                    int d=-(query.value(16).toInt());
+                    QString dal =QString("%1").arg(d);
+                    QTableWidgetItem * nm6 = new QTableWidgetItem(dal);
+                    nm6->setData(Qt::UserRole, query.value(0));
+                    nm6->setTextAlignment(Qt::AlignHCenter);
+                    ui->IUStableObject->setItem(row,5,nm6);
+                }
+                else
+                {
+                    QTableWidgetItem * nm5 = new QTableWidgetItem(query.value(17).toString());
+                    nm5->setData(Qt::UserRole, query.value(0));
+                    nm5->setTextAlignment(Qt::AlignHCenter);
+                    ui->IUStableObject->setItem(row,4,nm5);
+
+                    QTableWidgetItem * nm6 = new QTableWidgetItem(query.value(16).toString());
+                    nm6->setData(Qt::UserRole, query.value(0));
+                    nm6->setTextAlignment(Qt::AlignHCenter);
+                    ui->IUStableObject->setItem(row,5,nm6);
+                }
 
                 QTableWidgetItem * nm7 = new QTableWidgetItem(query.value(6).toString());
                 nm7->setData(Qt::UserRole, query.value(0));

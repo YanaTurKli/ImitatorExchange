@@ -42,7 +42,7 @@ void NWindow::pb_pbInsDoc_click()
 void NWindow::pb_pbInsObj_click()
 {
     obj->show();
-    obj->setWindowTitle("Добавление/редактирование обстановки");
+    obj->setWindowTitle("Добавление обстановки");
     obj->setIDRLS(Pr);
 
 }
@@ -76,9 +76,8 @@ void NWindow::setTables()
     headers << "Миним.\nвысота";
     headers << "Сценарий";
     headers << "Темп\nобзора";
-    headers << "Сигнал";
 
-    ui->RLStableRLS->setColumnCount(11);
+    ui->RLStableRLS->setColumnCount(10);
     ui->RLStableRLS->setHorizontalHeaderLabels(headers);
     ui->RLStableRLS->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
     ui->RLStableRLS->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
@@ -90,18 +89,17 @@ void NWindow::setTables()
     ui->RLStableRLS->horizontalHeader()->setSectionResizeMode(7, QHeaderView::Stretch);
     ui->RLStableRLS->horizontalHeader()->setSectionResizeMode(8, QHeaderView::Stretch);
     ui->RLStableRLS->horizontalHeader()->setSectionResizeMode(9, QHeaderView::Stretch);
-    ui->RLStableRLS->horizontalHeader()->setSectionResizeMode(10, QHeaderView::Stretch);
 
     headers.clear();
     headers << "Номер";
     headers << "Принад-\nлежность";
     headers << "Класс";
     headers << "Тип";
-    headers << "Пеленг";
-    headers << "Дальность";
-    headers << "Курс";
-    headers << "Скорость";
-    headers << "Скорость\nпо\nвысоте";
+    headers << "P";
+    headers << "D";
+    headers << "K";
+    headers << "V";
+    headers << "Vh";
     headers << "Х";
     headers << "Y";
     headers << "H";
@@ -245,8 +243,20 @@ void NWindow::timerEvent(QTimerEvent *)
     QString sql_str = QString("select * from objects where id_rls=%1").arg(Pr);
     QSqlQuery query(sql_str);
        while(query.next()) {
-           peleng= query.value(17).toInt();
+
            d= query.value(16).toInt()-1;
+
+//           if (d>0)
+//               d--;
+//           if(d<0)
+//               d++;
+//           if(d==0)
+//           {
+//               peleng= query.value(17).toInt()+180;
+//           }
+//               else {
+               peleng= query.value(17).toInt();
+//               }
            id=query.value(0).toInt();
 
            QString sql_str = QString("UPDATE objects set  peleng = %1, d = %2 where id_object =%3 ").arg(peleng).arg(d).arg(id);
@@ -438,15 +448,34 @@ void NWindow::NWupdateTableObject(int id)
                 nm4->setTextAlignment(Qt::AlignHCenter);
                 ui->RLStableObject->setItem(row,3,nm4);
 
-                QTableWidgetItem * nm5 = new QTableWidgetItem(query.value(16).toString());
-                nm5->setData(Qt::UserRole, query.value(0));
-                nm5->setTextAlignment(Qt::AlignHCenter);
-                ui->RLStableObject->setItem(row,4,nm5);
+                if(query.value(16).toInt()<0)
+                {
+                    int p=query.value(17).toInt()+180;
+                    QString pel =QString("%1").arg(p);
+                    QTableWidgetItem * nm5 = new QTableWidgetItem(pel);
+                    nm5->setData(Qt::UserRole, query.value(0));
+                    nm5->setTextAlignment(Qt::AlignHCenter);
+                    ui->RLStableObject->setItem(row,4,nm5);
 
-                QTableWidgetItem * nm6 = new QTableWidgetItem(query.value(17).toString());
-                nm6->setData(Qt::UserRole, query.value(0));
-                nm6->setTextAlignment(Qt::AlignHCenter);
-                ui->RLStableObject->setItem(row,5,nm6);
+                    int d=-(query.value(16).toInt());
+                    QString dal =QString("%1").arg(d);
+                    QTableWidgetItem * nm6 = new QTableWidgetItem(dal);
+                    nm6->setData(Qt::UserRole, query.value(0));
+                    nm6->setTextAlignment(Qt::AlignHCenter);
+                    ui->RLStableObject->setItem(row,5,nm6);
+                }
+                else
+                {
+                    QTableWidgetItem * nm5 = new QTableWidgetItem(query.value(17).toString());
+                    nm5->setData(Qt::UserRole, query.value(0));
+                    nm5->setTextAlignment(Qt::AlignHCenter);
+                    ui->RLStableObject->setItem(row,4,nm5);
+
+                    QTableWidgetItem * nm6 = new QTableWidgetItem(query.value(16).toString());
+                    nm6->setData(Qt::UserRole, query.value(0));
+                    nm6->setTextAlignment(Qt::AlignHCenter);
+                    ui->RLStableObject->setItem(row,5,nm6);
+                }
 
                 QTableWidgetItem * nm7 = new QTableWidgetItem(query.value(6).toString());
                 nm7->setData(Qt::UserRole, query.value(0));

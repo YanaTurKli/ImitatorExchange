@@ -44,8 +44,6 @@ private:
         QString type;
     };
 
-    QMap<int,objects> objs;
-
 private Q_SLOTS:
 
 public slots:
@@ -60,8 +58,5 @@ public slots:
    int isOnRLS(int id);
    void slotUpdateComRLS();
    void timerEvent(QTimerEvent *);
-
-
-
 };
 #endif // WINDOW_H

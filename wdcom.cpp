@@ -237,6 +237,12 @@ void WdCom::on_pbSave_pressed()
 
 
    emit loadDatabaseSignal(id_number.toInt(),id_com);
+   updateCmbType();
+   ui->cbNumber->clear();
+   ui->cbNumber->addItem("не выбрано",-1 );
+   updateCmbSector();
+   updateCmbSost();
+   updateCmbCom();
    hide();
 }
 

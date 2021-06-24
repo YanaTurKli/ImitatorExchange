@@ -64,7 +64,7 @@ void WdDoc::on_pbSave_pressed()
        QMessageBox::information(this,"Запрос",str_sql,QMessageBox::Ok);
    }
 
-
+    ui->textEdit->clear();
    emit newInsDoc(id_rls);
    hide();
 }
